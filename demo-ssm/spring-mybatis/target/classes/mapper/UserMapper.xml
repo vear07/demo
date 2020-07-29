@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ffcs.ssm.dao.UserMapper">
+	<resultMap id="userResultMap" type="com.ffcs.ssm.dao.entity.User">
+		<id property="id" column="id" />
+		<result property="userName" column="user_name" />
+	</resultMap>
+	<select id="selectUsers" resultMap="userResultMap">
+		select *
+		from user_tbl
+		where 1=1
+		<if test="id != null">
+			AND id = #{id}
+		</if>
+	</select>
+	<insert id="insertUser2">
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select 123 a from dual
+		</selectKey>
+		insert into user_tbl
+		(id, user_name)
+		values
+		(#{id}, #{username})
+	</insert>
+	<insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
+		insert into user_tbl
+		(user_name)
+		values(#{userName})
+	</insert>
+	<update id="updateUser">
+		update user_tbl set user_uame
+		=#{userName} where id = #{id}
+	</update>
+	<delete id="deleteUser">
+		delete from user_tbl where id= #{id}
+	</delete>
+</mapper>
